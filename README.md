@@ -1,1 +1,22 @@
-# r3x-haskell-sdk
+# RubiX Haskell SDK
+
+[![License](https://img.shields.io/badge/-Apache%202.0-blue.svg)](https://opensource.org/s/Apache-2.0)
+
+## Prerequisites
+Stack is needed to build and execute SDK, it can be downloaded from [here](https://www.haskell.org/downloads/)
+
+## Usage
+To build the SDK run :
+```
+$ stack build
+```
+To execute SDK run :
+```
+$ stack exec r3x-haskell-sdk-exe
+```
+
+## Documentation
+For full information on how to use the SDK and deploy a function to Knative, refer to our [Documentation here.](https://github.com/rubixFunctions/r3x-docs/blob/master/README.md)
+
+## License
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
