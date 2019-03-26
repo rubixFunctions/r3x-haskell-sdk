@@ -15,6 +15,10 @@ To execute SDK run :
 ```
 $ stack exec r3x-haskell-sdk-exe
 ```
+alternatively you can run the script `run.sh`:
+```
+$ ./run.sh
+```
 
 ## Documentation
 For full information on how to use the SDK and deploy a function to Knative, refer to our [Documentation here.](https://github.com/rubixFunctions/r3x-docs/blob/master/README.md)
