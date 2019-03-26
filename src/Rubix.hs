@@ -4,16 +4,28 @@ module Rubix
     ( runServer
     ) where
 
-import Network.Wai (responseLBS, Application)
-import Network.Wai.Handler.Warp (run)
-import Network.HTTP.Types (status200)
-import Network.HTTP.Types.Header (hContentType)
+import Network.Wai 
+import Network.Wai.Handler.Warp 
+import Network.HTTP.Types 
+import Network.HTTP.Types.Header 
 
 runServer = do
-    let port = 3000
-    putStrLn $ "Listening on port " ++ show port
+    let port = 8080
+    putStrLn $ "RubiX Listening on port " ++ show port
     run port app
 
 app :: Application
-app req f =
-    f $ responseLBS status200 [(hContentType, "text/plain")] "Hello RubiX!"
+app req respond = respond $
+    case requestMethod req of
+        "POST" -> index
+        _ -> r3xError
+
+index = responseLBS
+    status200
+    [("Content-Type", "application/json")]
+    "{\"msg\":\"JSON, -- Do you speak it?\", \"val\": \"Hello RubiX\"}"
+
+r3xError = responseLBS
+    status500
+    [("Content-Type", "text/plain")]
+    "500 Request Method not Supported"
