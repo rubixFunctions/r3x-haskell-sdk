@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Rubix
 
 main :: IO ()
-main = someFunc
+main = runServer
