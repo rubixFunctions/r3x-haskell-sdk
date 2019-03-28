@@ -17,15 +17,15 @@ runServer = do
 app :: Application
 app req respond = respond $
     case requestMethod req of
-        "POST" -> index
-        _ -> r3xError
+        "POST" -> handleRes
+        _ -> handlePortError
 
-index = responseLBS
+handleRes = responseLBS
     status200
     [("Content-Type", "application/json")]
     "{\"msg\":\"JSON, -- Do you speak it?\", \"val\": \"Hello RubiX\"}"
 
-r3xError = responseLBS
+handlePortError = responseLBS
     status500
     [("Content-Type", "text/plain")]
     "500 Request Method not Supported"
