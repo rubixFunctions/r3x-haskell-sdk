@@ -14,9 +14,19 @@ description:         Please see the README on GitHub at <https://github.com/rubi
 
 dependencies:
 - base >= 4.7 && < 5
-- wai 
+- wai
 - warp
+- cookie
+- mtl
 - http-types
+- bytestring
+- text
+- containers
+- case-insensitive
+- transformers
+- regex-pcre
+- blaze-html
+- aeson
 
 library:
   source-dirs: src

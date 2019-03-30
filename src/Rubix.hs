@@ -1,31 +1,23 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Rubix 
-    ( runServer
+    ( 
+    run
     ) where
 
-import Network.Wai 
-import Network.Wai.Handler.Warp 
-import Network.HTTP.Types 
-import Network.HTTP.Types.Header 
+import qualified Network.Wai.Handler.Warp as W
+import qualified Network.Wai as W
+import Network.HTTP.Types.Status
 
-runServer = do
-    let port = 8080
-    putStrLn $ "RubiX Listening on port " ++ show port
-    run port app
+import Control.Monad.Reader
+import Control.Monad.Except
 
-app :: Application
-app req respond = respond $
-    case requestMethod req of
-        "POST" -> handleRes
-        _ -> handlePortError
+-- Execute the app monad
+run ::  IO ()
+run = undefined
 
-handleRes = responseLBS
-    status200
-    [("Content-Type", "application/json")]
-    "{\"msg\":\"JSON, -- Do you speak it?\", \"val\": \"Hello RubiX\"}"
+-- Run the app monad on a wai request to obtain a wai response
+runRubix :: App () -> W.Request -> IO W.Response
+runRubix app req = undefined
 
-handlePortError = responseLBS
-    status500
-    [("Content-Type", "text/plain")]
-    "500 Request Method not Supported"
+-- Default 404 response
+notFoundResp :: W.Response
+notFoundResp = undefined
