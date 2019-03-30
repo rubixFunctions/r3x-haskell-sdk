@@ -6,7 +6,7 @@ import qualified Data.Text as T
 
 -- Start the server
 main :: IO ()
-main = undefined 
+main = execute 8080 app
 
 -- Define a route
 app :: App ()
@@ -14,5 +14,6 @@ app = undefined
 
 -- Define a response handler
 rubixHandler :: Handler T.Text
-rubixHandler = undefined
+rubixHandler = do
+  return "Hello RubiX"
 

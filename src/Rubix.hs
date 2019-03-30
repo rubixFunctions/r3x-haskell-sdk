@@ -1,8 +1,28 @@
 module Rubix 
     ( 
-    run,
+    execute,
     App,
-    Handler
+    Handler,
+    HeaderMap,
+    route,
+    runHandler,
+    getPath,
+    getPathInfo,
+    getMethod,
+    getQueryString,
+    getQueries,
+    getQueriesMulti,
+    getQuery,
+    getQueryMulti,
+    getHeaders,
+    getBody,
+    checkSecure,
+    waiRequest,
+    matchPaths,
+    ToResponse(..),
+    respond,
+    respondWith,
+    Json(..)
     ) where
 
 import qualified Network.Wai.Handler.Warp as W
@@ -14,10 +34,13 @@ import Control.Monad.Except
 
 import RubiX.Types
 import RubiX.Utils
+import RubiX.RubixRequest
+import RubiX.RubixHandler
+import RubiX.RubixResponse
 
 -- Execute the app monad
-run :: W.Port -> App() -> IO ()
-run port app = W.run port warpApp
+execute :: W.Port -> App() -> IO ()
+execute port app = W.run port warpApp
       where
         warpApp :: W.Request -> (W.Response -> IO W.ResponseReceived) -> IO W.ResponseReceived
         warpApp req res = runRubix app req >>= res
@@ -27,7 +50,7 @@ runRubix :: App () -> W.Request -> IO W.Response
 runRubix app req = either id (const notFoundResp) <$> runExceptT unpackApp
         where 
           unpackApp = do
-            reqBody <- fmap fromLBS . liftIO $ W.strictRequestBody req
+            reqBody <- fmap fromLazyByteString . liftIO $ W.strictRequestBody req
             runReaderT app ReqContext{request = req, requestBody = reqBody}
 
 -- Default 404 response

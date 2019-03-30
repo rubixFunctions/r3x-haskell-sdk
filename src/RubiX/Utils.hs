@@ -17,14 +17,22 @@ import Network.HTTP.Types.URI
 
 import RubiX.Types
 
-toBS :: T.Text -> BS.ByteString
-toBS = T.encodeUtf8
+toByteString :: T.Text -> BS.ByteString
+toByteString = T.encodeUtf8
 
-toLBS :: T.Text -> LBS.ByteString
-toLBS = LT.encodeUtf8 . LT.fromStrict
+toLazyByteString :: T.Text -> LBS.ByteString
+toLazyByteString = LT.encodeUtf8 . LT.fromStrict
 
-fromBS :: BS.ByteString -> T.Text
-fromBS = T.decodeUtf8
+fromByteString :: BS.ByteString -> T.Text
+fromByteString = T.decodeUtf8
 
-fromLBS :: LBS.ByteString -> T.Text
-fromLBS = LT.toStrict . LT.decodeUtf8
+fromLazyByteString :: LBS.ByteString -> T.Text
+fromLazyByteString = LT.toStrict . LT.decodeUtf8
+
+makeHeader :: T.Text -> T.Text -> HTTP.Header
+makeHeader headerName headerVal = (CI.mk (toByteString headerName), toByteString headerVal)
+
+fromHeaderMap :: HeaderMap -> HTTP.ResponseHeaders
+fromHeaderMap hm = do
+  (headerName, values) <- M.toList hm
+  [(CI.map toByteString headerName, toByteString value) | value <- values]
