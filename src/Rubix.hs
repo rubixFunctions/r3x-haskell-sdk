@@ -1,6 +1,8 @@
 module Rubix 
     ( 
-    run
+    run,
+    App,
+    Handler
     ) where
 
 import qualified Network.Wai.Handler.Warp as W
@@ -9,6 +11,8 @@ import Network.HTTP.Types.Status
 
 import Control.Monad.Reader
 import Control.Monad.Except
+
+import RubiX.Types
 
 -- Execute the app monad
 run ::  IO ()

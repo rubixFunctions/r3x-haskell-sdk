@@ -2,6 +2,7 @@
 module Main where
 
 import Rubix
+import qualified Data.Text as T
 
 -- Start the server
 main :: IO ()
@@ -12,6 +13,6 @@ app :: App ()
 app = undefined
 
 -- Define a response handler
-rubixHandler :: Handler 
+rubixHandler :: Handler T.Text
 rubixHandler = undefined
 
