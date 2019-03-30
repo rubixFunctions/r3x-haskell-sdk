@@ -10,10 +10,11 @@ main = execute 8080 app
 
 -- Define a route
 app :: App ()
-app = undefined
+app = do
+  route "/" rubixHandler
 
 -- Define a response handler
 rubixHandler :: Handler T.Text
 rubixHandler = do
-  return "Hello RubiX"
+  return "{message: \"Hello RubiX\"}"
 
