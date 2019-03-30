@@ -15,8 +15,11 @@ import Control.Monad.Except
 import RubiX.Types
 
 -- Execute the app monad
-run ::  IO ()
-run = undefined
+run :: W.Port -> App() -> IO ()
+run port app = W.run port warpApp
+      where
+        warpApp :: W.Request -> (W.Response -> IO W.ResponseReceived) -> IO W.ResponseReceived
+        warpApp req res = runRubix app req >>= res
 
 -- Run the app monad on a wai request to obtain a wai response
 runRubix :: App () -> W.Request -> IO W.Response
