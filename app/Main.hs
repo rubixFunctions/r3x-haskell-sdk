@@ -1,20 +1,28 @@
 {-# language OverloadedStrings #-}
+{-# language DeriveAnyClass #-}
+{-# language DeriveGeneric #-}
 module Main where
 
 import Rubix
-import qualified Data.Text as T
+import Data.Aeson (ToJSON, FromJSON)
+import GHC.Generics (Generic)
+import qualified Data.Text as DT
+import qualified Network.Wai as NW
+
+data Message = Message 
+  {
+    message :: DT.Text
+  } deriving (Generic, ToJSON, FromJSON)
+
+rubixMessage :: Message
+rubixMessage = Message{message="Hello RubiX!!!"}
+
+-- Define a response handler
+rubixHandler :: Handler NW.Response
+rubixHandler = do
+  let res = toResponse $ Json rubixMessage
+  return res
 
 -- Start the server
 main :: IO ()
-main = execute 8080 app
-
--- Define a route
-app :: App ()
-app = do
-  route "/" rubixHandler
-
--- Define a response handler
-rubixHandler :: Handler T.Text
-rubixHandler = do
-  return "{message: \"Hello RubiX\"}"
-
+main = execute rubixHandler
