@@ -64,5 +64,3 @@ packages:
 # compiler-check: newer-minor
 
 extra-deps:
-- network-uri-flag-0.1@sha256:b35cdf41ffe29683d1edd38e1226a343e60fa3ea6fc7307a78b7528b24c042ed
-- simpleargs-0.2.1@sha256:fcdb24eb0ef9863a782a28e0f2056cc044603c28742843b825ecc0a2a612a94b
