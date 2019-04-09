@@ -20,6 +20,14 @@ alternatively you can run the script `run.sh`:
 $ ./run.sh
 ```
 
+## Verify
+To quickly verify the SDK you can use the pre build example image by:
+```
+$ docker run -p 8080:8080 quay.io/rubixfunctions/haskell-sdk
+$ curl localhost:8080
+    {"message":"Hello RubiX!!!"}%
+```
+
 ## Documentation
 For full information on how to use the SDK and deploy a function to Knative, refer to our [Documentation here.](https://github.com/rubixFunctions/r3x-docs/blob/master/README.md)
 
