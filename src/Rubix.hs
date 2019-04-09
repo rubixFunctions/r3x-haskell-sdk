@@ -1,31 +1,71 @@
-{-# LANGUAGE OverloadedStrings #-}
-
+{-# language OverloadedStrings #-}
 module Rubix 
-    ( runServer
+    ( 
+    execute,
+    App,
+    Handler,
+    HeaderMap,
+    route,
+    runHandler,
+    getPath,
+    getPathInfo,
+    getMethod,
+    getQueryString,
+    getQueries,
+    getQueriesMulti,
+    getQuery,
+    getQueryMulti,
+    getHeaders,
+    getBody,
+    checkSecure,
+    waiRequest,
+    matchPaths,
+    ToResponse(..),
+    respond,
+    respondWith,
+    Json(..)
     ) where
 
-import Network.Wai 
-import Network.Wai.Handler.Warp 
-import Network.HTTP.Types 
-import Network.HTTP.Types.Header 
+import qualified Network.Wai.Handler.Warp as NW
+import qualified Network.Wai as NW
+import Network.HTTP.Types.Status
+import qualified Data.Text as T
 
-runServer = do
-    let port = 8080
-    putStrLn $ "RubiX Listening on port " ++ show port
-    run port app
+import Control.Monad.Reader
+import Control.Monad.Except
 
-app :: Application
-app req respond = respond $
-    case requestMethod req of
-        "POST" -> handleRes
-        _ -> handlePortError
+import RubiX.Types
+import RubiX.Utils
+import RubiX.RubixRequest
+import RubiX.RubixHandler
+import RubiX.RubixResponse
 
-handleRes = responseLBS
-    status200
-    [("Content-Type", "application/json")]
-    "{\"msg\":\"JSON, -- Do you speak it?\", \"val\": \"Hello RubiX\"}"
+-- Start server
+execute :: ToResponse a => Handler a -> IO()
+execute rubixHandler = do 
+  putStrLn $ "RubiX Server starting to listen on port 8080"
+  run 8080 $ rubixApp rubixHandler
 
-handlePortError = responseLBS
-    status500
-    [("Content-Type", "text/plain")]
-    "500 Request Method not Supported"
+-- Set Route and Handler
+rubixApp :: ToResponse a => Handler a -> App()
+rubixApp rubixHandler = do
+  route "/" rubixHandler
+
+-- Execute the app monad
+run:: NW.Port -> App() -> IO ()
+run port app = NW.run port warpApp
+      where
+        warpApp :: NW.Request -> (NW.Response -> IO NW.ResponseReceived) -> IO NW.ResponseReceived
+        warpApp req res = runRubix app req >>= res
+
+-- Run the app monad on a wai request to obtain a wai response
+runRubix :: App () -> NW.Request -> IO NW.Response
+runRubix app req = either id (const notFoundResp) <$> runExceptT unpackApp
+        where 
+          unpackApp = do
+            reqBody <- fmap fromLazyByteString . liftIO $ NW.strictRequestBody req
+            runReaderT app ReqContext{request = req, requestBody = reqBody}
+
+-- Default 404 response
+notFoundResp :: NW.Response
+notFoundResp = undefined
