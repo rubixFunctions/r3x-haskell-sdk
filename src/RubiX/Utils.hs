@@ -50,4 +50,4 @@ simpleQuery :: Query -> QueryMap
 simpleQuery = DM.fromListWith (flip const) . fmap (second (fromMaybe "")) . queriesToList
 
 queriesToList :: Query -> [(T.Text, Maybe T.Text)]
-queriesToList = fmap (bimap fromByteString (fmap fromByteString))
+queriesToList = fmap $ bimap fromByteString $ fmap fromByteString

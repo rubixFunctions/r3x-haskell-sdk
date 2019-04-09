@@ -44,7 +44,7 @@ import RubiX.RubixResponse
 execute :: ToResponse a => Handler a -> IO()
 execute rubixHandler = do 
   putStrLn $ "RubiX Server starting to listen on port 8080"
-  run 8080 (rubixApp rubixHandler)
+  run 8080 $ rubixApp rubixHandler
 
 -- Set Route and Handler
 rubixApp :: ToResponse a => Handler a -> App()

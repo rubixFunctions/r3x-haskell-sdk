@@ -40,9 +40,6 @@ instance ToResponse String where
 instance ToResponse DT.Text where
   toResponse = makeResponse ok200 "text/plain"
 
-instance ToResponse Html where
-  toResponse = makeResponse ok200 "text/html" . DTL.toStrict . renderHtml
-
 instance (ToJSON a) => ToResponse (Json a) where
   toResponse (Json obj) = toResponse (toJSON obj)
 
