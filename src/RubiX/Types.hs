@@ -1,4 +1,3 @@
-{-# language NamedFieldPuns #-}
 module RubiX.Types where
 
 import Control.Monad.Reader

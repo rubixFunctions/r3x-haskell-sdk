@@ -1,7 +1,5 @@
 {-# language FlexibleInstances #-}
 {-# language OverloadedStrings #-}
-{-# language UndecidableInstances #-}
-{-# language RankNTypes #-}
 module RubiX.RubixResponse
   ( ToResponse(..)
   , Json(..)

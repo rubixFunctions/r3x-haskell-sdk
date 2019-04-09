@@ -1,7 +1,6 @@
 {-# language OverloadedStrings #-}
 {-# language FlexibleContexts #-}
-{-# language ConstraintKinds #-}
-{-# language RankNTypes #-}
+{-# language ConstraintKinds #-} 
 {-# language ViewPatterns #-}
 module RubiX.RubixRequest
   ( getPath

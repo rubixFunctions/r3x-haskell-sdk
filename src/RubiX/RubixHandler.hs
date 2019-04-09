@@ -1,7 +1,5 @@
 {-# language OverloadedStrings #-}
 {-# language FlexibleContexts #-}
-{-# language RankNTypes #-}
-{-# language ViewPatterns #-}
 module RubiX.RubixHandler
   ( route
   ) where
