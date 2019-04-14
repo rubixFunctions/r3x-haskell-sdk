@@ -98,4 +98,4 @@ matchPaths :: ReqReader b => Pattern -> b Bool
 matchPaths pattern = checkMatch pattern <$> getPath 
   where
     checkMatch :: Pattern -> Route -> Bool
-    checkMatch (DT.unpack -> pat) (DT.unpack -> rt) =  rt =~ ("^" ++ pat ++ "$")
+    checkMatch (DT.unpack -> pat) (DT.unpack -> rt) = rt =~ ("^" ++ pat ++ "$")
