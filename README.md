@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/rubixFunctions/r3x-haskell-sdk.svg?style=svg)](https://circleci.com/gh/rubixFunctions/r3x-haskell-sdk)
 [![License](https://img.shields.io/badge/-Apache%202.0-blue.svg)](https://opensource.org/s/Apache-2.0)
+[![Hackage](https://img.shields.io/hackage/v/:packageName.svg)](http://hackage.haskell.org/package/r3x-haskell-sdk)
 
 
 ## Prerequisites
